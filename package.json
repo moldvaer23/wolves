@@ -1,0 +1,12 @@
+{
+  "name": "wolves",
+  "version": "1.0.0",
+  "description": "Pet messenger project",
+  "author": "moldvaer23",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "install:services": "cd services && yarn run install:all",
+    "build:services": "cd services && yarn run build:all"
+  }
+}

@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: wolves
+      POSTGRES_PASSWORD: SPS2of2o_6
+      POSTGRES_DB: wolves_database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: vladimir@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 45151987Kg!1
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
