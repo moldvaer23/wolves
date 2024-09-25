@@ -1,41 +1,33 @@
-import axios from "axios";
 import dotenv from "dotenv";
 import express from "express";
+import axios, { AxiosError } from "axios";
+
+import { APP_CONFIG } from "./config";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || APP_CONFIG.servicePort;
 
-const rootPath = "/api";
-
-const rootHeaders = {
-  "Cache-Control": "no-cache",
-  Pragma: "no-cache",
-  Expires: "0",
-};
+app.use(express.json());
 
 /* Маршрутизация запросов к микросервису User */
-app.use(`${rootPath}/user`, async (req, res) => {
+app.use(`${APP_CONFIG.apiPath}/user`, async (req, res) => {
   const { method, url } = req;
-
-  const userServiceUrl = `${process.env.SERVICE_USER_URL}${url}`;
 
   try {
     const response = await axios({
       method: method,
-      url: userServiceUrl,
+      url: `${process.env.SERVICE_USER_URL}${url}`,
       data: req.body,
-      headers: {
-        ...req.headers,
-        ...rootHeaders,
-      },
+      headers: APP_CONFIG.axiosHeaders,
+      timeout: APP_CONFIG.axiosTimeOut,
     });
 
     res.status(response.status).json(response.data);
   } catch (err) {
-    const errorMessage = (err as Error).message;
-    res.status(500).json({ message: errorMessage });
+    const error = err as AxiosError;
+    res.status(error.status || 500).json(error.response?.data);
   }
 });
 

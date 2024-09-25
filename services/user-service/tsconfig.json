@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES6", // Версия JS для компиляции
-    "module": "ES2020",
-    "moduleResolution": "Bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "outDir": "./dist", // Папка для скомпилированного кода
     "rootDir": "./src", // Папка с исходниками
     "strict": true, // Включение строгого режима TS

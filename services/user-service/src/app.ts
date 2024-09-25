@@ -1,17 +1,18 @@
-import express from "express";
 import dotenv from "dotenv";
-
-import { getUser } from "./controllers/user-controller";
-
+import express from "express";
 dotenv.config();
 
+import { APP_CONFIG } from "./config";
+import { getUser, registration } from "./controllers/user-controller";
+
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || APP_CONFIG.servicePort;
 
 app.use(express.json());
 
 /* Маршруты */
 app.get("/:id", getUser);
+app.post("/registration", registration);
 
 /* Запуск сервера */
 app.listen(PORT, () => {
