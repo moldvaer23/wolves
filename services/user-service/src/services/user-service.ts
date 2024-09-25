@@ -1,18 +1,18 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
-import { RegistrationUserProps, User } from "../types";
-import { createUser, findUserByEmail, getUserById } from "../models/user-model";
-
-const JWT_SECRET = process.env.JWT_SECRET as string;
+import { createJWTToken } from "../utils";
+import { LoginUserProps, RegistrationUserProps, User } from "../types";
+import { createUser, getUserByEmail, getUserById } from "../models/user-model";
 
 /* Сервис регистрации пользователя */
-const registrationUser = async (props: RegistrationUserProps) => {
+const registrationUser = async (
+  props: RegistrationUserProps
+): Promise<{ token: string; user: User }> => {
   const { email, password, username } = props;
 
   try {
     /* Проверяем, существует ли пользователь */
-    const existingUser = await findUserByEmail(email);
+    const existingUser = await getUserByEmail(email);
     if (existingUser) {
       throw new Error("A user with this email already exists");
     }
@@ -29,18 +29,49 @@ const registrationUser = async (props: RegistrationUserProps) => {
     });
 
     /* Генерируем JWT токен */
-    const token = jwt.sign(
-      { id: newUser.id, email: newUser.email },
-      JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
+    const token = createJWTToken({
+      email: newUser.email,
+      id: newUser.id,
+      username: newUser.username,
+    });
 
-    return { token, user: newUser };
+    return { token: token, user: newUser };
   } catch (error) {
     const errorMessage = (error as Error).message;
     throw new Error(`Error registration user: ${errorMessage}`);
+  }
+};
+
+/* Сервис авторизации пользователя */
+const loginUser = async (
+  props: LoginUserProps
+): Promise<{ token: string; user: User }> => {
+  const { email, password } = props;
+
+  try {
+    /* Ищем пользователя по email */
+    const user = await getUserByEmail(email);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    /* Сравниваем введеный пароль с хешированным паролем */
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    if (!isPasswordValid) {
+      throw new Error("Invalid password");
+    }
+
+    /* Создаем JWT токен */
+    const token = createJWTToken({
+      email: user.email,
+      id: user.id,
+      username: user.username,
+    });
+
+    return { token, user };
+  } catch (error) {
+    const errorMessage = (error as Error).message;
+    throw new Error(`Error login user: ${errorMessage}`);
   }
 };
 
@@ -62,5 +93,6 @@ const fetchUserById = async (id: number): Promise<User> => {
 
 export default {
   registrationUser,
+  loginUser,
   fetchUserById,
 };

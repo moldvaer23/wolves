@@ -3,16 +3,20 @@ import express from "express";
 dotenv.config();
 
 import { APP_CONFIG } from "./config";
-import { getUser, registration } from "./controllers/user-controller";
+import { authenticateToken } from "./middlewares/user-middlewares";
+import { getUser, login, registration } from "./controllers/user-controller";
 
 const app = express();
 const PORT = process.env.PORT || APP_CONFIG.servicePort;
 
 app.use(express.json());
 
-/* Маршруты */
-app.get("/:id", getUser);
+/* Открытые маршруты */
 app.post("/registration", registration);
+app.post("/login", login);
+
+/* Закрытые маршруты */
+app.get("/:id", authenticateToken, getUser);
 
 /* Запуск сервера */
 app.listen(PORT, () => {

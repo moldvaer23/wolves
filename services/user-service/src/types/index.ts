@@ -12,3 +12,14 @@ export type RegistrationUserProps = {
   email: string;
   password: string;
 };
+
+export type LoginUserProps = {
+  email: string;
+  password: string;
+};
+
+export type JWTData = {
+  id: number;
+  email: string;
+  username: string;
+};

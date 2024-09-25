@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import axios, { AxiosError } from "axios";
 
 import { APP_CONFIG } from "./config";
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || APP_CONFIG.servicePort;
@@ -20,7 +20,10 @@ app.use(`${APP_CONFIG.apiPath}/user`, async (req, res) => {
       method: method,
       url: `${process.env.SERVICE_USER_URL}${url}`,
       data: req.body,
-      headers: APP_CONFIG.axiosHeaders,
+      headers: {
+        ...APP_CONFIG.axiosHeaders,
+        Authorization: req.headers.authorization,
+      },
       timeout: APP_CONFIG.axiosTimeOut,
     });
 

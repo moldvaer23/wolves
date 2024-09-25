@@ -23,7 +23,7 @@ export const createUser = async (
 };
 
 /* Поиск пользователя по email */
-export const findUserByEmail = async (email: string): Promise<User> => {
+export const getUserByEmail = async (email: string): Promise<User> => {
   const query = "SELECT * FROM users WHERE email = $1";
   const values = [email];
 
