@@ -1,12 +1,12 @@
-import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
+import resolve from "rollup-plugin-node-resolve";
+import typescript from "rollup-plugin-typescript2";
 
 export default {
   input: "src/app.ts", // Входная точка вашего приложения
   output: {
-    file: "dist/api-service.js", // Имя выходного файла
+    file: "dist/chat-service.js", // Имя выходного файла
     format: "cjs", // Формат CommonJS для Node.js
   },
   plugins: [
@@ -18,7 +18,7 @@ export default {
   external: [
     // Зависимости, которые не нужно включать в сборку
     "express",
+    "pg",
     "dotenv",
-    "axios",
   ],
 };

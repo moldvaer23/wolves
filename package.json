@@ -8,5 +8,8 @@
   "scripts": {
     "install:services": "cd services && yarn run install:all",
     "build:services": "cd services && yarn run build:all"
+  },
+  "dependencies": {
+    "socket.io": "^4.8.0"
   }
 }
