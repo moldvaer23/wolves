@@ -3,8 +3,8 @@ import express from "express";
 dotenv.config();
 
 import { APP_CONFIG } from "./config";
-import { authenticateToken } from "./middlewares/user-middlewares";
-import { getUser, login, registration } from "./controllers/user-controller";
+import { authenticateToken } from "./middlewares";
+import { getUser, login, registration } from "./controllers";
 
 const app = express();
 const PORT = process.env.PORT || APP_CONFIG.servicePort;

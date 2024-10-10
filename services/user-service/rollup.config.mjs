@@ -8,6 +8,7 @@ export default {
   output: {
     file: "dist/user-service.js", // Имя выходного файла
     format: "cjs", // Формат CommonJS для Node.js
+    sourcemap: true,
   },
   plugins: [
     resolve(), // Позволяет Rollup находить node_modules
@@ -17,8 +18,10 @@ export default {
   ],
   external: [
     // Зависимости, которые не нужно включать в сборку
-    "express",
-    "pg",
+    "bcryptjs",
     "dotenv",
+    "express",
+    "jsonwebtoken",
+    "pg",
   ],
 };

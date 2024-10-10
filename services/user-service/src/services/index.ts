@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 
 import { createJWTToken } from "../utils";
 import { LoginUserProps, RegistrationUserProps, User } from "../types";
-import { createUser, getUserByEmail, getUserById } from "../models/user-model";
+import { createUser, getUserByEmail, getUserById } from "../models";
 
 /* Сервис регистрации пользователя */
 const registrationUser = async (

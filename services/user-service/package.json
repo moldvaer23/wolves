@@ -8,8 +8,7 @@
   "scripts": {
     "start": "node dist/user-service.js",
     "build": "rollup -c",
-    "dev": "ts-node src/app.ts",
-    "watch": "nodemon --watch 'src/**/*.ts' --exec ts-node src/app.ts"
+    "view": "yarn run build && yarn run start"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -24,7 +23,6 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.6.0",
     "@types/pg": "^8.11.10",
-    "nodemon": "^3.1.7",
     "rollup": "^4.22.4",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",

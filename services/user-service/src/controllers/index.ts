@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import userService from "../services/user-service";
+import userService from "../services";
 
 /* Контроллер регистрации пользователя */
 export const registration = async (req: Request, res: Response) => {

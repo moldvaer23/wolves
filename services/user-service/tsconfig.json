@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES6", // Версия JS для компиляции
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "outDir": "./dist", // Папка для скомпилированного кода
-    "rootDir": "./src", // Папка с исходниками
-    "strict": true, // Включение строгого режима TS
-    "esModuleInterop": true // Поддержка import/export
+    "target": "ES6",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true
   },
-  "include": ["src/**/*"] // Какие файлы компилировать
+  "include": ["src/**/*"]
 }
